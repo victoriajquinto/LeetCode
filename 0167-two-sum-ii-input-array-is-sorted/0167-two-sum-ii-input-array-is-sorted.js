@@ -9,15 +9,13 @@ var twoSum = function(numbers, target) {
   //c: smaller index goes first
   //e: empty array, negative numbers
 
-  //loop through the array. for each element
-  for(let left = 0; left < numbers.length; left++) {
-    let leftAddend = numbers[left];
-    for(let right = numbers.length-1; right > left; right--) {
-        let rightAddend = numbers[right];
-        if(leftAddend + rightAddend === target) {
-            return [left+1, right+1];
-        }
-    }
-    
-  }
+    //assign left and right pointers to ends of array
+    let [ left, right ] = [0, numbers.length-1];
+  //loop through the array. left pointer will always be less than right pointer
+    while (left < right) {
+        let sum = numbers[left] + numbers[right];
+        if (sum === target) return [left+1, right+1];
+        if (sum < target) left++;
+        if (sum > target) right--;
+    };
 };
