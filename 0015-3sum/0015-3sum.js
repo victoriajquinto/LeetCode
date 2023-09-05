@@ -31,7 +31,7 @@ var threeSum = function(nums) {
                 left++;
             } else if ( tripletSum > 0) {
                 right--;
-            //if a === b + c, push [a,b,c] into results array
+            //if sum === 0, push [a,b,c] into results array
             } else {
                 results.push([a, nums[left], nums[right]]);
                 left++;
