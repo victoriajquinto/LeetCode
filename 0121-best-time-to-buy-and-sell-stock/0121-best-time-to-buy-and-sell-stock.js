@@ -8,7 +8,7 @@ var maxProfit = function(prices) {
     let maxProfit = 0;
 
     //while left is to the left of right
-    for(let i = 0; i < prices.length; i++)
+    for(let i = 0; i < prices.length; i++){
         //if value at left is greater than value at right
         if(prices[left] > prices[right]) {
             //reassign left to where right is
@@ -26,6 +26,6 @@ var maxProfit = function(prices) {
             right++;
         }
     
-
+    }
     return maxProfit;
 };
