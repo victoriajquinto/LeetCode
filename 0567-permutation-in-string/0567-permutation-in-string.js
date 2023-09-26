@@ -3,68 +3,42 @@
  * @param {string} s2
  * @return {boolean}
  */
-var checkInclusion = (s1, s2) => {
-    const isInvalid = s2.length < s1.length;
-    if (isInvalid) return false;
 
-    let [left, right] = [0, 0];
-    const [s1FrequencyMap, s2FrequencyMap] = getFrequencyMaps(s1);
+var checkInclusion = function(s1, s2) {
+   let s1CharCount = mapString(s1); 
 
-    while (right < s2.length) {
-        addRightFrequency(s2, right, s2FrequencyMap);
+   for(let l = 0; l < s2.length; l++) {
+        let r = l + s1.length;
+        let substring = s2.substring(l, r);
+        let substringCharCount = mapString(substring);
 
-        const window = right - left + 1;
-        const isPermutation =
-            window === s1.length && isSame(s1FrequencyMap, s2FrequencyMap);
-        if (isPermutation) return true;
+        if (s1CharCount === substringCharCount) return true;
 
-        const canSlide = s1.length <= window;
-        if (canSlide) {
-            subtractLeftFrequency(s2, left, s2FrequencyMap);
-            left++;
+   }
+
+   return false;
+};
+
+var mapString = function(s) {
+    let map = new Map();
+    for(let i = 0; i < s.length; i++) {
+        if (!map.has(s[i])) {
+            map.set(s[i], 1);
+        } else {
+            map.set(s[i], map.get(s[i]) + 1);
         }
-
-        right++;
     }
+    const count = Array.from(map).sort((a,b) => a[0].localeCompare(b[0]));
+    return JSON.stringify(count);
+}
 
-    return false;
-};
 
-const getFrequencyMaps = (s1) => {
-    const [s1FrequencyMap, s2FrequencyMap] = new Array(2)
-        .fill()
-        .map(() => new Array(26).fill(0));
-
-    for (const char of s1) s1FrequencyMap[getCode(char)]++;
-
-    return [s1FrequencyMap, s2FrequencyMap];
-};
-
-const getCode = (char) => char.charCodeAt(0) - 'a'.charCodeAt(0);
-
-const addRightFrequency = (s, right, frequencyMap) => {
-    const char = s[right];
-    const index = getCode(char);
-
-    frequencyMap[index]++;
-
-    return frequencyMap[index];
-};
-
-const subtractLeftFrequency = (s, left, frequencyMap) => {
-    const char = s[left];
-    const index = getCode(char);
-
-    frequencyMap[index]--;
-
-    return frequencyMap[index];
-};
-
-const isSame = (a, b) => {
-    for (let i = 0; i < 26; i++) {
-        const isMatch = a[i] === b[i];
-        if (!isMatch) return false;
-    }
-
-    return true;
-};
+//determine the length of s1
+//create a map of s1
+//sort keys of s1 set alphabetically, then json.stringify
+    
+//loop through s2. for each iteration, starting with l at 0 and right at l + s1Length - 1
+    //create a map of substring
+    //sort keys of s1 set alphabetically, then json.stringify
+    //if map of s1 stringified === map of substring stringified, return true
+//if loop concludes prior to if statement triggering, return false
