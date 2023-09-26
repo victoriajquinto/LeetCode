@@ -5,6 +5,7 @@
  */
 
 var checkInclusion = function(s1, s2) {
+    if (s1.length > s2.length) return false;
    let s1CharCount = mapString(s1); 
 
    for(let l = 0; l < s2.length; l++) {
