@@ -22,9 +22,6 @@ var isValid = function(s) {
             //push char into stack
             stack.push(char);
         } else if (stack[stack.length - 1] === reference[char]) {
-            if(stack.length === 0) {
-                return false;
-            }
             //pop last char from stack
             stack.pop();
         } else {
